@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+
+<title>Basic Feature Engineering with the Titanic Data « triangleinequality</title>
+
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://triangleinequality.wordpress.com/xmlrpc.php">
+
+<link rel="dns-prefetch" href="https://s2.wp.com/">
+<link rel="dns-prefetch" href="https://s1.wp.com/">
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://s.pubmine.com/">
+<link rel="dns-prefetch" href="https://x.bidswitch.net/">
+<link rel="dns-prefetch" href="https://static.criteo.net/">
+<link rel="dns-prefetch" href="https://ib.adnxs.com/">
+<link rel="dns-prefetch" href="https://aax.amazon-adsystem.com/">
+<link rel="dns-prefetch" href="https://bidder.criteo.com/">
+<link rel="dns-prefetch" href="https://cas.criteo.com/">
+<link rel="dns-prefetch" href="https://gum.criteo.com/">
+<link rel="dns-prefetch" href="https://ads.pubmatic.com/">
+<link rel="dns-prefetch" href="https://gads.pubmatic.com/">
+<link rel="dns-prefetch" href="https://tpc.googlesyndication.com/">
+<link rel="dns-prefetch" href="https://ad.doubleclick.net/">
+<link rel="dns-prefetch" href="https://googleads.g.doubleclick.net/">
+<link rel="dns-prefetch" href="https://www.googletagservices.com/">
+<link rel="dns-prefetch" href="https://cdn.switchadhub.com/">
+<link rel="dns-prefetch" href="https://delivery.g.switchadhub.com/">
+<link rel="dns-prefetch" href="https://delivery.swid.switchadhub.com/">
+<link rel="alternate" type="application/rss+xml" title="triangleinequality » Feed" href="https://triangleinequality.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="triangleinequality » Comments Feed" href="https://triangleinequality.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="triangleinequality » Basic Feature Engineering with the Titanic&nbsp;Data Comments Feed" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/feed/">
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1505864856h&ver=4.8.2"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b!==c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="all-css-0-1" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a_004.js"></script>
+<link rel="stylesheet" id="all-css-0-2" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/style.css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://triangleinequality.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="A complete guide to getting 0.79903 in Kaggle’s Titanic Competition with&nbsp;Python" href="https://triangleinequality.wordpress.com/2013/09/05/a-complete-guide-to-getting-0-79903-in-kaggles-titanic-competition-with-python/">
+<link rel="next" title="Finding Triangles in a&nbsp;Graph" href="https://triangleinequality.wordpress.com/2013/09/11/finding-triangles-in-a-graph/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/">
+<link rel="shortlink" href="http://wp.me/p3xjVg-3U">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F&amp;for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F&amp;for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic Feature Engineering with the Titanic Data">
+<meta property="og:url" content="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/">
+<meta property="og:description" content="Today we are going to add a couple of features to the Titanic data set that I have discussed extensively, this will involve changing my data cleaning script. Following this I will test the new feat…">
+<meta property="article:published_time" content="2013-09-08T15:14:26+00:00">
+<meta property="article:modified_time" content="2013-09-08T15:35:15+00:00">
+<meta property="og:site_name" content="triangleinequality">
+<meta property="og:image" content="https://triangleinequality.files.wordpress.com/2013/05/titanic.jpg">
+<meta property="og:image:width" content="640">
+<meta property="og:image:height" content="360">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@wordpressdotcom">
+<meta name="twitter:text:title" content="Basic Feature Engineering with the Titanic&nbsp;Data">
+<meta name="twitter:image:src" content="https://triangleinequality.files.wordpress.com/2013/05/titanic.jpg?w=640">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png">
+<link rel="openid.server" href="https://triangleinequality.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="https://triangleinequality.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="https://triangleinequality.wordpress.com/osd.xml" title="triangleinequality">
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com">
+<meta name="theme-color" content="#999999">
+<meta name="application-name" content="triangleinequality"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="for matters mathematical"><meta name="msapplication-task" content="name=Subscribe;action-uri=https://triangleinequality.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="title" content="Basic Feature Engineering with the Titanic&nbsp;Data | triangleinequality on WordPress.com">
+<meta name="description" content="Today we are going to add a couple of features to the Titanic data set that I have discussed extensively, this will involve changing my data cleaning script. Following this I will test the new features using cross-validation to see if they made a difference. These new features come from reading the Kaggle forums and…">
+	<style type="text/css">
+			#site-title a,
+		#site-description {
+			color: #545454 !important;
+		}
+		</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #999999; }
+</style>
+		<script type="text/javascript">
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'academica', amp: false };
+		</script>
+		<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/head.js"></script>
+		<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/publishertag.js"></script><link rel="amphtml" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/amp/"><link rel="stylesheet" type="text/css" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/shCore.css"><link rel="stylesheet" type="text/css" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script><script type="text/javascript" async="" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ga.js"></script>
+<style type="text/css"></style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/services.css"></head>
+<body class="post-template-default single single-post postid-242 single-format-standard custom-background mp6 customizer-styles-applied column-full column-right highlander-enabled highlander-light">
+	<div id="wrap">
+		<div id="header" class="clearfix">
+
+			<div id="main-nav">
+				<div id="menuhead" class="menu"><ul>
+<li><a href="https://triangleinequality.wordpress.com/">Home</a></li><li class="page_item page-item-1"><a href="https://triangleinequality.wordpress.com/about/">About</a></li>
+<li class="page_item page-item-233"><a href="https://triangleinequality.wordpress.com/contents/">Contents</a></li>
+</ul></div>
+			</div><!-- end #main-nav -->
+
+			<div id="logo">
+				<h1 id="site-title">
+					<a href="https://triangleinequality.wordpress.com/" title="triangleinequality - for matters mathematical" rel="home">
+						triangleinequality					</a>
+				</h1>
+				<p id="site-description">for matters mathematical</p>
+			</div><!-- end #logo -->
+
+			<div id="search">
+				<form method="get" id="searchform" action="https://triangleinequality.wordpress.com/">
+	<label for="s" class="assistive-text hidden">Search</label>
+	<input id="s" name="s" placeholder="Search" type="text">
+	<button id="searchsubmit" name="submit" type="submit">Search</button>
+</form>			</div><!-- end #search -->
+
+			
+<div id="social">
+	<ul>
+			</ul>
+</div>
+		</div><!-- end #header -->
+
+		<hr class="sepinside">
+<div id="content" class="clearfix">
+
+	
+	<div class="column column-title">
+		<div id="crumbs">
+	<p><a href="https://triangleinequality.wordpress.com/">Home</a> » <a href="https://triangleinequality.wordpress.com/category/machine-learning/">machine learning</a> » <a href="https://triangleinequality.wordpress.com/category/machine-learning/feature-creation/">feature creation</a> » <span class="current">Basic Feature Engineering with the Titanic&nbsp;Data</span></p>
+</div><!-- end #crumbs -->		<h1 class="title-header">Basic Feature Engineering with the Titanic&nbsp;Data</h1>	</div><!-- end .column-title -->
+
+	
+	<div class="column column-content single">
+
+		
+<div id="post-242" class="post-242 post type-post status-publish format-standard has-post-thumbnail hentry category-feature-creation category-kaggle category-machine-learning category-python category-titanic tag-feature-engineering tag-kaggle tag-python tag-titanic">
+
+	<div class="entry-content clearfix">
+		<p>Today we are going to add a couple of features to the Titanic data 
+set that I have discussed extensively, this will involve changing my 
+data cleaning script. Following this I will test the new features using 
+cross-validation to see if they made a difference. These new features 
+come from reading the <a href="http://www.kaggle.com/c/titanic-gettingStarted/forums">Kaggle forums </a>and also this <a href="http://gertlowitz.blogspot.com.au/2013/06/where-am-i-up-to-with-titanic-competion.html">helpful blog post</a>.</p>
+<p><strong>Titles</strong></p>
+<p>First up the Name column is currently not being used, but we can at 
+least extract the title from the name. There are quite a few titles 
+going around, but I want to reduce them all to Mrs, Miss, Mr and 
+Master.&nbsp; To do this we’ll need a function that searches for 
+substrings. Thankfully the library ‘strings’ has just what we need.</p>
+<div><div id="highlighter_858673" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python keyword">import</code> <code class="python plain">strings</code></div><div class="line number2 index1 alt1"><code class="python keyword">def</code> <code class="python plain">substrings_in_string(big_string, substrings):</code></div><div class="line number3 index2 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">for</code> <code class="python plain">substring </code><code class="python keyword">in</code> <code class="python plain">substrings:</code></div><div class="line number4 index3 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">if</code> <code class="python plain">string.find(big_string, substring) !</code><code class="python keyword">=</code> <code class="python keyword">-</code><code class="python value">1</code><code class="python plain">:</code></div><div class="line number5 index4 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python plain">substring</code></div><div class="line number6 index5 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python functions">print</code> <code class="python plain">big_string</code></div><div class="line number7 index6 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python plain">np.nan</code></div></div></td></tr></tbody></table></div></div>
+<p>Using this iteratively I was able to get a full list of titles.</p>
+<div><div id="highlighter_294266" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python plain">title_list</code><code class="python keyword">=</code><code class="python plain">[</code><code class="python string">'Mrs'</code><code class="python plain">, </code><code class="python string">'Mr'</code><code class="python plain">, </code><code class="python string">'Master'</code><code class="python plain">, </code><code class="python string">'Miss'</code><code class="python plain">, </code><code class="python string">'Major'</code><code class="python plain">, </code><code class="python string">'Rev'</code><code class="python plain">,</code></div><div class="line number2 index1 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python string">'Dr'</code><code class="python plain">, </code><code class="python string">'Ms'</code><code class="python plain">, </code><code class="python string">'Mlle'</code><code class="python plain">,</code><code class="python string">'Col'</code><code class="python plain">, </code><code class="python string">'Capt'</code><code class="python plain">, </code><code class="python string">'Mme'</code><code class="python plain">, </code><code class="python string">'Countess'</code><code class="python plain">,</code></div><div class="line number3 index2 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python string">'Don'</code><code class="python plain">, </code><code class="python string">'Jonkheer'</code><code class="python plain">]</code></div></div></td></tr></tbody></table></div></div>
+<p>Now that I have them, I recombine them to the four categories.</p>
+<div><div id="highlighter_222134" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python plain">df[</code><code class="python string">'Title'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df[</code><code class="python string">'Name'</code><code class="python plain">].</code><code class="python functions">map</code><code class="python plain">(</code><code class="python keyword">lambda</code> <code class="python plain">x: substrings_in_string(x, title_list))</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="python comments">#replacing all titles with mr, mrs, miss, master</code></div><div class="line number4 index3 alt1"><code class="python keyword">def</code> <code class="python plain">replace_titles(x):</code></div><div class="line number5 index4 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python plain">title</code><code class="python keyword">=</code><code class="python plain">x[</code><code class="python string">'Title'</code><code class="python plain">]</code></div><div class="line number6 index5 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">if</code> <code class="python plain">title </code><code class="python keyword">in</code> <code class="python plain">[</code><code class="python string">'Don'</code><code class="python plain">, </code><code class="python string">'Major'</code><code class="python plain">, </code><code class="python string">'Capt'</code><code class="python plain">, </code><code class="python string">'Jonkheer'</code><code class="python plain">, </code><code class="python string">'Rev'</code><code class="python plain">, </code><code class="python string">'Col'</code><code class="python plain">]:</code></div><div class="line number7 index6 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python string">'Mr'</code></div><div class="line number8 index7 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">elif</code> <code class="python plain">title </code><code class="python keyword">in</code> <code class="python plain">[</code><code class="python string">'Countess'</code><code class="python plain">, </code><code class="python string">'Mme'</code><code class="python plain">]:</code></div><div class="line number9 index8 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python string">'Mrs'</code></div><div class="line number10 index9 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">elif</code> <code class="python plain">title </code><code class="python keyword">in</code> <code class="python plain">[</code><code class="python string">'Mlle'</code><code class="python plain">, </code><code class="python string">'Ms'</code><code class="python plain">]:</code></div><div class="line number11 index10 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python string">'Miss'</code></div><div class="line number12 index11 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">elif</code> <code class="python plain">title </code><code class="python keyword">=</code><code class="python keyword">=</code><code class="python string">'Dr'</code><code class="python plain">:</code></div><div class="line number13 index12 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">if</code> <code class="python plain">x[</code><code class="python string">'Sex'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python keyword">=</code><code class="python string">'Male'</code><code class="python plain">:</code></div><div class="line number14 index13 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python string">'Mr'</code></div><div class="line number15 index14 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">else</code><code class="python plain">:</code></div><div class="line number16 index15 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python string">'Mrs'</code></div><div class="line number17 index16 alt2"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">else</code><code class="python plain">:</code></div><div class="line number18 index17 alt1"><code class="python spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="python keyword">return</code> <code class="python plain">title</code></div><div class="line number19 index18 alt2"><code class="python plain">df[</code><code class="python string">'Title'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df.</code><code class="python functions">apply</code><code class="python plain">(replace_titles, axis</code><code class="python keyword">=</code><code class="python value">1</code><code class="python plain">)</code></div></div></td></tr></tbody></table></div></div>
+<p>You may be interested to know that ‘Jonkheer’ is a male honorific for
+ Dutch nobility. Also interesting is that I was tempted to just send 
+‘Dr’ -&gt; ‘Mr’, but decided to check first, and there was indeed a 
+female doctor aboard! It seems 1912 was further ahead of its time than 
+Doctor Who!</p>
+<p>Curious, I looked her up: her name was Dr. Alice Leader, and she and her husband were physicians in New York city.</p>
+<p><a href="http://www.encyclopedia-titanica.org/titanic-survivor/alice-leader.html"><img class="alignnone" alt="" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/leader_af.jpg" width="109" height="150"></a></p>
+<p>But I digress. On to the decks.<br>
+<strong>Deck</strong></p>
+<p>This is going be very similar, we have a ‘Cabin’ column not doing 
+much, only 1st class passengers have cabins, the rest are ‘Unknown’. A 
+cabin number looks like ‘C123’. The letter refers to the deck, and so 
+we’re going to extract these just like the titles.</p>
+<div><div id="highlighter_389354" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python comments">#Turning cabin number into Deck</code></div><div class="line number2 index1 alt1"><code class="python plain">cabin_list </code><code class="python keyword">=</code> <code class="python plain">[</code><code class="python string">'A'</code><code class="python plain">, </code><code class="python string">'B'</code><code class="python plain">, </code><code class="python string">'C'</code><code class="python plain">, </code><code class="python string">'D'</code><code class="python plain">, </code><code class="python string">'E'</code><code class="python plain">, </code><code class="python string">'F'</code><code class="python plain">, </code><code class="python string">'T'</code><code class="python plain">, </code><code class="python string">'G'</code><code class="python plain">, </code><code class="python string">'Unknown'</code><code class="python plain">]</code></div><div class="line number3 index2 alt2"><code class="python plain">df[</code><code class="python string">'Deck'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df[</code><code class="python string">'Cabin'</code><code class="python plain">].</code><code class="python functions">map</code><code class="python plain">(</code><code class="python keyword">lambda</code> <code class="python plain">x: substrings_in_string(x, cabin_list))</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Family Size</strong><br>
+One thing you can do to create new features is linear combinations of 
+features. In a model like linear regression this should be unnecessary, 
+but for a decision tree may find it hard to model such relationships. 
+Reading on the forums at Kaggle, some people have considered the size of
+ a person’s family, the sum of their ‘SibSp’ and ‘Parch’ attributes. 
+Perhaps people traveling alone did better? Or on the other hand perhaps 
+if you had a family, you might have risked your life looking for them, 
+or even giving up a space up to them in a lifeboat. Let’s throw that 
+into the mix.</p>
+<div><div id="highlighter_565869" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python comments">#Creating new family_size column</code></div><div class="line number2 index1 alt1"><code class="python plain">df[</code><code class="python string">'Family_Size'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df[</code><code class="python string">'SibSp'</code><code class="python plain">]</code><code class="python keyword">+</code><code class="python plain">df[</code><code class="python string">'Parch'</code><code class="python plain">]</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Age*Class</strong><br>
+This is an interaction term, since age and class are both numbers we can just multiply them.</p>
+<div><div id="highlighter_486301" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python plain">df[</code><code class="python string">'Age*Class'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df[</code><code class="python string">'Age'</code><code class="python plain">]</code><code class="python keyword">*</code><code class="python plain">df[</code><code class="python string">'Pclass'</code><code class="python plain">]</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Fare per Person</strong></p>
+<p>Here we divide the fare by the number of family members traveling 
+together, I’m not exactly sure what this represents, but it’s easy 
+enough to add in.</p>
+<div><div id="highlighter_571811" class="syntaxhighlighter nogutter  python"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="python plain">df[</code><code class="python string">'Fare_Per_Person'</code><code class="python plain">]</code><code class="python keyword">=</code><code class="python plain">df[</code><code class="python string">'Fare'</code><code class="python plain">]</code><code class="python keyword">/</code><code class="python plain">(df[</code><code class="python string">'Family_Size'</code><code class="python plain">]</code><code class="python keyword">+</code><code class="python value">1</code><code class="python plain">)</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>Get The Code<br>
+</strong>I have incorporated these new features in a new data cleaning cleantitanic2.py script, which you can download <a href="http://sourceforge.net/projects/triangleinequal/files/Titanic/cleantitanic2.py/download">here</a>.</p>
+			<style type="text/css">
+			div.wpmrec2x{max-width:610px;}
+			div.wpmrec2x div.u > div{float:left;margin-right:10px;}
+			div.wpmrec2x div.u > div:nth-child(3n){margin-right:0px;}
+			</style>		<div class="wpcnt">
+			<div class="wpa wpmrec wpmrec2x" style="display: inline-block !important;">
+				<span class="wpa-about">Advertisements</span>
+				<div class="u">
+										<script type="text/javascript" id="s26942">
+						(function(g,$){if("undefined"!=typeof g.__ATA){
+							g.__ATA.initAd({collapseEmpty:'after', sectionId:26942, width:300, height:250});
+							g.__ATA.initAd({collapseEmpty:'after', sectionId:114160, width:300, height:250});
+						}})(window,jQuery);
+					</script>
+				</div>
+						<div id="crt-373838964" style="width: 300px; height: 250px; display: block !important;"><iframe src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/afr.html" id="crt-373838964_cto_iframe" marginwidth="0px" marginheight="0px" scrolling="no" width="100%" height="100%" frameborder="0"></iframe></div>
+		<script type="text/javascript">
+		var o = document.getElementById('crt-373838964');
+		if ("undefined"!=typeof Criteo) {
+			var p = o.parentNode;
+			p.style.setProperty('display', 'inline-block', 'important');
+			o.style.setProperty('display', 'block', 'important');
+			Criteo.DisplayAcceptableAdIfAdblocked({zoneid:388248,containerid:"crt-373838964",collapseContainerIfNotAdblocked:true,"callifnotadblocked": function () {var o = document.getElementById('crt-373838964'); o.style.setProperty('display','none','important');o.style.setProperty('visbility','hidden','important'); } });
+		} else {
+			o.style.setProperty('display', 'none', 'important');
+			o.style.setProperty('visibility', 'hidden', 'important');
+		}
+		</script>		<div id="crt-242879322" style="width: 300px; height: 250px; display: block !important;"><iframe src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/afr_002.html" id="crt-242879322_cto_iframe" marginwidth="0px" marginheight="0px" scrolling="no" width="100%" height="100%" frameborder="0"></iframe></div>
+		<script type="text/javascript">
+		var o = document.getElementById('crt-242879322');
+		if ("undefined"!=typeof Criteo) {
+			var p = o.parentNode;
+			p.style.setProperty('display', 'inline-block', 'important');
+			o.style.setProperty('display', 'block', 'important');
+			Criteo.DisplayAcceptableAdIfAdblocked({zoneid:837497,containerid:"crt-242879322",collapseContainerIfNotAdblocked:true,"callifnotadblocked": function () {var o = document.getElementById('crt-242879322'); o.style.setProperty('display','none','important');o.style.setProperty('visbility','hidden','important'); } });
+		} else {
+			o.style.setProperty('display', 'none', 'important');
+			o.style.setProperty('visibility', 'hidden', 'important');
+		}
+		</script>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-242" class="share-twitter sd-button share-icon" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/?share=twitter&amp;nb=1" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-242" class="share-facebook sd-button share-icon" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/?share=facebook&amp;nb=1" target="_blank" title="Share on Facebook"><span>Facebook<span class="share-count">1</span></span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-242" class="share-google-plus-1 sd-button share-icon" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/?share=google-plus-1&amp;nb=1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-end"></li></ul></div></div></div><div class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" id="like-post-wrapper-52270418-242-59f33f79bbf4f" data-src="//widgets.wp.com/likes/#blog_id=52270418&amp;post_id=242&amp;origin=triangleinequality.wordpress.com&amp;obj_id=52270418-242-59f33f79bbf4f" data-name="like-post-frame-52270418-242-59f33f79bbf4f"><h3 class="sd-title">Like this:</h3><div class="likes-widget-placeholder post-likes-widget-placeholder" style="height: 55px; display: none;"><span class="button"><span>Like</span></span> <span class="loading">Loading...</span></div><iframe class="post-likes-widget jetpack-likes-widget" name="like-post-frame-52270418-242-59f33f79bbf4f" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a.html" width="100%" height="55px" frameborder="0"></iframe><span class="sd-text-color"></span><a class="sd-link-color"></a></div>
+<div id="jp-relatedposts" class="jp-relatedposts" style="display: block;">
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+<div class="jp-relatedposts-items jp-relatedposts-items-minimal"><p class="jp-relatedposts-post jp-relatedposts-post0" data-post-id="224" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://triangleinequality.wordpress.com/2013/09/05/a-complete-guide-to-getting-0-79903-in-kaggles-titanic-competition-with-python/" title="A complete guide to getting 0.79903 in Kaggle's Titanic Competition with Python
+
+Ok so this is going to be a quick recap of all the work we have done so far in this blog, but it should be accessible to first time readers also. Quickstart: to get underway immediately just download the following python scripts: -Data Cleaning -Graph Theory -Decision Trees -Final…" rel="nofollow" data-origin="242" data-position="0">A complete guide to getting 0.79903 in Kaggle's Titanic Competition with Python</a></span><span class="jp-relatedposts-post-context">In "decision trees"</span></p><p class="jp-relatedposts-post jp-relatedposts-post1" data-post-id="3" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://triangleinequality.wordpress.com/2013/05/19/machine-learning-with-python-first-steps-munging/" title="Machine Learning with Python - First Steps: Munging the Titanic
+
+So in this series I want to learn about Python and Machine Learning, implementing many of the algorithms 'from scratch' to really get a feel for how they work. The data set I intend to examine in great detail is from Kaggle, concerning the survivors of the titanic, you can…" rel="nofollow" data-origin="242" data-position="1">Machine Learning with Python - First Steps: Munging the Titanic</a></span><span class="jp-relatedposts-post-context">In "Kaggle"</span></p><p class="jp-relatedposts-post jp-relatedposts-post2" data-post-id="37" data-post-format="false"><span class="jp-relatedposts-post-title"><a class="jp-relatedposts-post-a" href="https://triangleinequality.wordpress.com/2013/05/25/plotting-with-python/" title="Plotting With Python
+
+So we are continuing from last time, with the Titanic data set from Kaggle. Since our 'response', the survived column, is categorical or discrete, the easiest kind of plot to read will also be discrete, like bar charts. First let's load in the cleaned data we produced, and any libraries…" rel="nofollow" data-origin="242" data-position="2">Plotting With Python</a></span><span class="jp-relatedposts-post-context">In "Kaggle"</span></p></div></div></div>	</div><!-- end .entry-content -->
+
+	<div class="entry-meta">
+		<p class="tags"><strong>Tags:</strong> <a href="https://triangleinequality.wordpress.com/tag/feature-engineering/" rel="tag">feature engineering</a>, <a href="https://triangleinequality.wordpress.com/tag/kaggle/" rel="tag">Kaggle</a>, <a href="https://triangleinequality.wordpress.com/tag/python/" rel="tag">python</a>, <a href="https://triangleinequality.wordpress.com/tag/titanic/" rel="tag">Titanic</a></p><span class="by-author">By <span class="author vcard"><a class="url fn n" href="https://triangleinequality.wordpress.com/author/triangleinequality/" title="View all posts by triangleinequality" rel="author">triangleinequality</a></span> </span>in <span class="category"><a href="https://triangleinequality.wordpress.com/category/machine-learning/feature-creation/" rel="category tag">feature creation</a>, <a href="https://triangleinequality.wordpress.com/category/kaggle/" rel="category tag">Kaggle</a>, <a href="https://triangleinequality.wordpress.com/category/machine-learning/" rel="category tag">machine learning</a>, <a href="https://triangleinequality.wordpress.com/category/python/" rel="category tag">python</a>, <a href="https://triangleinequality.wordpress.com/category/kaggle/titanic/" rel="category tag">Titanic</a></span> on <span class="datetime"><a href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/" title="3:14 pm" rel="bookmark"><time class="entry-date" datetime="2013-09-08T15:14:26+00:00" pubdate="">September 8, 2013</time></a></span>.	</div><!-- end .entry-meta -->
+
+</div><!-- end #post-## -->
+		<div class="navigation clearfix">
+			<span class="alignleft"><a href="https://triangleinequality.wordpress.com/2013/09/05/a-complete-guide-to-getting-0-79903-in-kaggles-titanic-competition-with-python/" rel="prev"><span class="meta-nav">←</span> A complete guide to getting 0.79903 in Kaggle’s Titanic Competition with&nbsp;Python</a></span>			<span class="alignright"><a href="https://triangleinequality.wordpress.com/2013/09/11/finding-triangles-in-a-graph/" rel="next">Finding Triangles in a&nbsp;Graph <span class="meta-nav">→</span></a></span>		</div><!-- end .navigation -->
+
+		
+<div id="comments">
+
+	<hr>	<div id="respond" class="comment-respond js">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://triangleinequality.wordpress.com/2013/09/08/basic-feature-engineering-with-the-titanic-data/#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="https://triangleinequality.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				<input id="highlander_comment_nonce" name="highlander_comment_nonce" value="8e6febf3d2" type="hidden"><input name="_wp_http_referer" value="/2013/09/08/basic-feature-engineering-with-the-titanic-data/" type="hidden">
+<input name="hc_post_as" id="hc_post_as" value="guest" type="hidden">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px !important; min-height: 0px !important; overflow: hidden; transition: none 0s ease 0s ; font-family: Helvetica,Arial,Tahoma,sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: 17px; width: 938px;" class="autosizejs ">Enter your comment here...</textarea><textarea id="comment" name="comment" title="Enter your comment here..." placeholder="Enter your comment here..." style="height: 37px; overflow: hidden; overflow-wrap: break-word; resize: none;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a_002.html" scrolling="no" allowtransparency="true" seamless="seamless" width="24" height="24" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ad516503a11cd5ca435acc9bb6523536.png" alt="Gravatar" class="no-grav" width="25">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email"></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text"></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url"></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ad516503a11cd5ca435acc9bb6523536.png" alt="WordPress.com Logo" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" type="hidden">
+				<input name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" type="hidden">
+				<input name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" type="hidden">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'wordpress'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ad516503a11cd5ca435acc9bb6523536.png" alt="Twitter picture" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" type="hidden">
+				<input name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" type="hidden">
+				<input name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" type="hidden">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'twitter'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ad516503a11cd5ca435acc9bb6523536.png" alt="Facebook photo" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" type="hidden">
+				<input name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" type="hidden">
+				<input name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" type="hidden">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'facebook'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/ad516503a11cd5ca435acc9bb6523536.png" alt="Google+ photo" class="no-grav" width="25">
+			</div>
+
+				<div class="comment-form-fields">
+				<input name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" type="hidden">
+				<input name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" type="hidden">
+				<input name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" type="hidden">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout(%20'googleplus'%20);">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input name="subscribe" id="subscribe" value="subscribe" style="width: auto;" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p></div>
+
+
+
+
+<p class="form-submit" style="display: none;"><input name="submit" id="comment-submit" class="submit" value="Post Comment" type="submit"> <input name="comment_post_ID" value="242" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="63600fe152" type="hidden"></p>
+<input name="genseq" value="1509113721" type="hidden">
+<p style="display: none;"></p>			<input id="ak_js" name="ak_js" value="1509113724903" type="hidden"></form>
+			</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+	</div><!-- end .column-content -->
+
+	
+	
+</div><!-- end #content -->
+
+			<div id="footer" class="clearfix">
+				
+								<p class="copy">
+					<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+									</p>
+			</div><!-- end #footer -->
+		</div><!-- end #wrap -->
+
+		<!--  -->
+<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/wpgroho.js"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging 
+In\u2026","submittingText":"Posting 
+Comment\u2026","postCommentText":"Post 
+Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s:
+ You are commenting using your %2$s account.","logoutText":"Log 
+Out","loginText":"Log 
+In","connectURL":"https:\/\/triangleinequality.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/triangleinequality.wordpress.com\/wp-login.php?action=logout&_wpnonce=4a5d5f2cdc","homeURL":"https:\/\/triangleinequality.wordpress.com\/","postID":"242","gravDefault":"identicon","enterACommentError":"Please
+ enter a comment","enterEmailError":"Please enter your email address 
+here","invalidEmailError":"Invalid email 
+address","enterAuthorError":"Please enter your name 
+here","gravatarFromEmail":"This picture will show whenever you leave a 
+comment. Click to customize it.","logInToExternalAccount":"Log in to use
+ details from one of these 
+accounts.","change":"Change","changeAccount":"Change 
+Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+/*
+ ]]> */
+</script>
+<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a_003.js"></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" type="submit">
+				<input id="carousel-reblog-blog-id" value="52270418" type="hidden">
+				<input id="carousel-reblog-blog-url" value="https://triangleinequality.wordpress.com" type="hidden">
+				<input id="carousel-reblog-blog-title" value="triangleinequality" type="hidden">
+				<input id="carousel-reblog-post-url" value="" type="hidden">
+				<input id="carousel-reblog-post-title" value="" type="hidden">
+			</div>
+
+			<input id="_wpnonce" name="_wpnonce" value="cd7a12dec5" type="hidden"><input name="_wp_http_referer" value="/2013/09/08/basic-feature-engineering-with-the-titanic-data/" type="hidden">		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = 
+{"https:\/\/triangleinequality.wordpress.com\/2013\/09\/08\/basic-feature-engineering-with-the-titanic-data\/":242};
+
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+		<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = 
+"https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, 
+document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = 
+"https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		
+//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+
+		document.getElementsByTagName("head")[0].insertBefore( themecss, 
+document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t 
+configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+
+// Infinite scroll support
+jQuery( function( $ ) {
+	$( document.body ).on( 'post-load', function() {
+		SyntaxHighlighter.highlight();
+	} );
+} );
+</script>
+<link rel="stylesheet" id="all-css-0-3" href="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/jetpack-carousel.css" type="text/css" media="all">
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='https://s1.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel-ie8fix.css?m=1412618825h&#038;ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = 
+{"siteID":"52270418","siteName":"triangleinequality","siteURL":"http:\/\/triangleinequality.wordpress.com","icon":"<img
+ alt='' src='https:\/\/s1.wp.com\/i\/logo\/wpcom-gray-white.png' 
+class='avatar avatar-50' height='50' width='50' 
+\/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/academica","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/triangleinequality.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F","themeURL":"","xhrURL":"https:\/\/triangleinequality.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"7090e9923e","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input
+ type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"68d857ac12\" 
+\/>","referer":"https:\/\/triangleinequality.wordpress.com\/2013\/09\/08\/basic-feature-engineering-with-the-titanic-data\/","canFollow":"1","feedID":"10963036","statusMessage":"","customizeLink":"https:\/\/triangleinequality.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F","postID":"242","shortlink":"http:\/\/wp.me\/p3xjVg-3U","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/triangleinequality.wordpress.com\/242","statsLink":"https:\/\/wordpress.com\/stats\/post\/242\/triangleinequality.wordpress.com","i18n":{"view":"View
+ 
+site","follow":"Follow","following":"Following","edit":"Edit","login":"Log
+ in","signup":"Sign up","customize":"Customize","report":"Report this 
+content","themeInfo":"Get theme: Academica","shortlink":"Copy 
+shortlink","copied":"Copied","followedText":"New posts from this site 
+will now appear in your <a 
+href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this
+ bar","unfoldBar":"Expand this bar","editSubs":"Manage 
+subscriptions","viewReader":"View site in Reader","viewReadPost":"View 
+post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email 
+address","followers":"Join 69 other followers","alreadyUser":"Already 
+have a WordPress.com account? <a 
+href=\"https:\/\/triangleinequality.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F\">Log
+ in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = 
+{"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/triangleinequality.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"97213d1a70","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post
+ Comment","write_comment":"Write a 
+Comment...","loading_comments":"Loading 
+Comments...","download_original":"View full size <span 
+class=\"photo-size\">{0}<span 
+class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please
+ be sure to submit some text with your 
+comment.","no_comment_email":"Please provide an email address to 
+comment.","no_comment_author":"Please provide your name to 
+comment.","comment_post_error":"Sorry, but there was an error posting 
+your comment. Please try again later.","comment_approved":"Your comment 
+was approved.","comment_unapproved":"Your comment is in 
+moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter
+ Speed","focal_length":"Focal 
+Length","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/triangleinequality.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F","blog_id":"52270418","local_comments_commenting_as":"<fieldset><label
+ for=\"email\">Email (Required)<\/label> <input type=\"text\" 
+name=\"email\" class=\"jp-carousel-comment-form-field 
+jp-carousel-comment-form-text-field\" 
+id=\"jp-carousel-comment-form-email-field\" 
+\/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> 
+<input type=\"text\" name=\"author\" 
+class=\"jp-carousel-comment-form-field 
+jp-carousel-comment-form-text-field\" 
+id=\"jp-carousel-comment-form-author-field\" 
+\/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input 
+type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field 
+jp-carousel-comment-form-text-field\" 
+id=\"jp-carousel-comment-form-url-field\" 
+\/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add
+ your thoughts here... 
+(optional)","reblogging":"Reblogging...","post_reblog":"Post 
+Reblog","stats_query_args":"blog=52270418&v=wpcom&tz=0&user_id=0&subd=triangleinequality","is_public":"1","reblog_enabled":""};
+/*
+ ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/a_002.js"></script><div id="actionbar" class="actnbr-pub-academica actnbr-has-follow"><ul><li class="actnbr-btn actnbr-hidden"> 			    	<a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> 			    	<div class="actnbr-popover tip tip-top-left actnbr-notice"> 			    		<div class="tip-arrow"></div> 			    		<div class="tip-inner actnbr-follow-bubble"></div> 			    	</div> 			    </li><li class="actnbr-ellipsis actnbr-hidden"> 			  <svg class="gridicon gridicon__ellipsis" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> 			  <div class="actnbr-popover tip tip-top-left actnbr-more"> 			  	<div class="tip-arrow"></div> 			  	<div class="tip-inner"> 				  <ul> 				    <li class="actnbr-sitename actnbr-hidden"><a href="http://triangleinequality.wordpress.com/"><img alt="" src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/wpcom-gray-white.png" class="avatar avatar-50" width="50" height="50"> triangleinequality</a></li> 				   	<li class="actnbr-folded-customize actnbr-hidden"><a href="https://triangleinequality.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F"><svg class="gridicon gridicon__customize" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> 				    <li class="actnbr-folded-follow actnbr-hidden"><a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> 					<li class="actnbr-signup actnbr-hidden"><a href="https://wordpress.com/start/">Sign up</a></li> 				    <li class="actnbr-login actnbr-hidden"><a href="https://triangleinequality.wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Ftriangleinequality.wordpress.com%2F2013%2F09%2F08%2Fbasic-feature-engineering-with-the-titanic-data%2F">Log in</a></li> 				     				    <li class="actnbr-shortlink actnbr-hidden"><a href="http://wp.me/p3xjVg-3U">Copy shortlink</a></li> 				    <li class="flb-report actnbr-hidden"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> 				     				     				    <li class="actnbr-subs actnbr-hidden"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> 				    <li class="actnbr-fold actnbr-hidden"><a href="">Collapse this bar</a></li> 			      </ul> 			    </div> 		      </div> 		    </li> 	      </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/master.html" scrolling="no" id="likes-master" name="likes-master" style="display:none;"></iframe>
+		<div id="likes-other-gravatars"><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/w.js" type="text/javascript" async="" defer="defer"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', 
+{'blog_id':'52270418','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view',
+ 
+{'blog':'52270418','v':'wpcom','tz':'0','user_id':'0','post':'242','subd':'triangleinequality'}]);
+_stq.push(['extra',
+ 
+{'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdTdvUG14Q2VDQTR4LlUsLi82dU1mai9BMkM9QjRQOXBLb118Qmw0NzRIaVlyUzQ1PTVpRy9udjRzSm9nXXxHPUFMfG1GR244Z1JiP2NUOC5la1ZrbjFsQUxhcVEwZlctVEZwdHZKWjRuSURZRDErNFhuXUw9TkNTJS0xZUp8VH5sUEhxMy0leDVGby1sVjQlcWMxU1pPRFpmVUtGajAucG13X3dCcmNoXW9kLWZ0JVBXLGZbUz9BbmxrcUtzVF1oalhZXzRXSENhYVVJZVt2JTg9VkMxSWJWZWRkenZrZU5HfGpNekxJMCU='}]);
+_stq.push([
+ 'clickTrackerInit', '52270418', '242' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + 
+wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + 
+wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + 
+'//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba='
+ + Math.random();
+	}
+	
+}
+</script>	
+
+
+<img src="Basic%20Feature%20Engineering%20with%20the%20Titanic%20Data%20%C2%AB%20triangleinequality_files/g.gif" alt=":)" id="wpstats"></body></html>
+<!--
+	generated in 0.111 seconds
+	53352 bytes batcached for 300 seconds
+-->
